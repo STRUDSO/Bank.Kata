@@ -3,7 +3,7 @@ using BankAccount.Test.Doubles;
 
 namespace BankAccount.Test;
 
-public class BankAccount_Should
+public class BankAccountScenarios
 {
     private readonly AccountService _accountService;
     private readonly CalendarStub _calendarStub;
@@ -19,7 +19,7 @@ public class BankAccount_Should
      * PrintableStatement
      * PrintableStatementLine
      */
-    public BankAccount_Should()
+    public BankAccountScenarios()
     {
         _calendarStub = new CalendarStub();
         _bankStatementPrinterSpy = new BankStatementPrinterSpy();

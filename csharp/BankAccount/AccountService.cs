@@ -1,8 +1,25 @@
-﻿namespace BankAccount;
+﻿using BankAccount.Ports;
+
+namespace BankAccount;
 
 public class AccountService
 {
-    public void Deposit(int amount) => throw new NotImplementedException();
-    public void Withdraw(int amount) => throw new NotImplementedException();
-    public void PrintStatement() => throw new NotImplementedException();
+    public AccountService(ICalendar calendarStub, ITransactionRepository transactionRepository)
+    {
+
+    }
+
+    public void Deposit(int amount)
+    {
+    }
+
+    public void Withdraw(int amount)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PrintStatement()
+    {
+        throw new NotImplementedException();
+    }
 }

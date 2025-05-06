@@ -1,7 +1,13 @@
-﻿namespace BankAccount.Test;
+﻿using BankAccount.Ports;
+using BankAccount.Test.Doubles;
+
+namespace BankAccount.Test;
 
 public class BankAccount_Should
 {
+    private readonly AccountService _accountService;
+    private readonly CalendarStub _calendarStub;
+
     /*
      * Design:
      * AccountService -> Calendar Port (Stub)
@@ -12,12 +18,18 @@ public class BankAccount_Should
      * PrintableStatement
      * PrintableStatementLine
      */
+    public BankAccount_Should()
+    {
+        _calendarStub = new CalendarStub();
+        _accountService = new AccountService(_calendarStub, new FakeTransactionRepository());
+
+    }
 
     [Fact]
     public void DepositTest()
     {
-        Deposit(of: 1000, on: "10-01-2012");
-        Deposit(of: 2000, on: "13-01-2012");
+        Deposit(of: 1000, on: new(2012, 1, 13));
+        Deposit(of: 2000, on: new(2012, 1, 13));
         WithDraw(of: 5000, on: "14-01-2012");
         PrintBankStatement();
         ExpectedPrintedStatement("""
@@ -29,9 +41,10 @@ public class BankAccount_Should
         );
     }
 
-    private void Deposit(int of, string on)
+    private void Deposit(int of, DateTime on)
     {
-        throw new NotImplementedException();
+        _calendarStub.ReturnOnce(on);
+        _accountService.Deposit(of);
     }
 
     private void WithDraw(int of, string on)

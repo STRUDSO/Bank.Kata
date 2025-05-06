@@ -1,6 +1,6 @@
 ﻿namespace BankAccount.Test;
 
-public class BankAccont_Should
+public class BankAccount_Should
 {
     /*
      * Design:

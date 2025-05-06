@@ -4,12 +4,14 @@ namespace BankAccount;
 
 public class AccountService
 {
+    private readonly IBankStatementPrinter _bankStatementPrinter;
+
     public AccountService(
         ICalendar calendarStub,
         ITransactionRepository transactionRepository,
         IBankStatementPrinter bankStatementPrinter)
     {
-
+        _bankStatementPrinter = bankStatementPrinter;
     }
 
     public void Deposit(int amount)
@@ -22,5 +24,6 @@ public class AccountService
 
     public void PrintStatement()
     {
+        _bankStatementPrinter.Print("Date       || Amount || Balance");
     }
 }

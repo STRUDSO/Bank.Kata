@@ -18,6 +18,14 @@ public class BankAccount_Should
         _accountService = new AccountService(_calendarStub, _transactionRepository, _bankStatementPrinter);
     }
 
+    [Fact]
+    public void Print_Account_Header()
+    {
+        PrintBankStatement();
+
+        ExpectedPrintedStatement("Date       || Amount || Balance");
+    }
+
 
 
     private void Deposit(int of, DateTime on)

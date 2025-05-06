@@ -7,6 +7,7 @@ public class BankAccount_Should
 {
     private readonly AccountService _accountService;
     private readonly CalendarStub _calendarStub;
+    private readonly BankStatementPrinterSpy _bankStatementPrinterSpy;
 
     /*
      * Design:
@@ -18,10 +19,11 @@ public class BankAccount_Should
      * PrintableStatement
      * PrintableStatementLine
      */
-public BankAccount_Should()
+    public BankAccount_Should()
     {
         _calendarStub = new CalendarStub();
-        _accountService = new AccountService(_calendarStub, new FakeTransactionRepository());
+        _bankStatementPrinterSpy = new BankStatementPrinterSpy();
+        _accountService = new AccountService(_calendarStub, new FakeTransactionRepository(), _bankStatementPrinterSpy);
 
     }
 
@@ -55,11 +57,11 @@ public BankAccount_Should()
 
     private void PrintBankStatement()
     {
-        throw new NotImplementedException();
+        _accountService.PrintStatement();
     }
 
-    private void ExpectedPrintedStatement(string s)
+    private void ExpectedPrintedStatement(string expected)
     {
-        throw new NotImplementedException();
+        Assert.Equal(expected, _bankStatementPrinterSpy.LastPrintOut);
     }
 }

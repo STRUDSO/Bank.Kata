@@ -29,4 +29,24 @@ Given a client makes a deposit of 1000 on 10-01-2012
                                  """
         );
     }
+
+    private void Deposit(int of, string on)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void WithDraw(int of, string on)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void PrintBankStatement()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ExpectedPrintedStatement(string s)
+    {
+        throw new NotImplementedException();
+    }
 }

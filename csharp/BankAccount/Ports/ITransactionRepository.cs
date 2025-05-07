@@ -8,10 +8,4 @@ public interface ITransactionRepository
     void Add(Transfer transfer);
 }
 
-public record Transfer(DateTime TransferDate, int Amount)
-{
-    public string Print()
-    {
-        return TransferDate.ToShortDateString() + " || " + Amount.ToString("") + "    || " + Amount;
-    }
-}
+public record Transfer(DateTime TransferDate, int Amount);

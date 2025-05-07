@@ -9,16 +9,6 @@ public class BankAccountScenarios
     private readonly CalendarStub _calendarStub;
     private readonly BankStatementPrinterSpy _bankStatementPrinterSpy;
 
-    /*
-     * Design:
-     * AccountService -> Calendar Port (Stub)
-     * AccountService -> Transaction Repository (Fake)
-     * AccountService -> IBankStatementPrinter (Spy)
-     *
-     * Transfer
-     * PrintableStatement
-     * PrintableStatementLine
-     */
     public BankAccountScenarios()
     {
         _calendarStub = new CalendarStub();
@@ -36,9 +26,9 @@ public class BankAccountScenarios
         PrintBankStatement();
         ExpectedPrintedStatement("""
                                  Date       || Amount || Balance
-                                 14/01/2012 || -500   || 2500
-                                 13/01/2012 || 2000   || 3000
-                                 10/01/2012 || 1000   || 1000
+                                 14/01/2012 || -500    || 2500
+                                 13/01/2012 || 2000    || 3000
+                                 10/01/2012 || 1000    || 1000
                                  """
         );
     }

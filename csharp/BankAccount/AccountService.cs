@@ -1,4 +1,6 @@
-﻿using BankAccount.Ports;
+﻿using System.Runtime.InteropServices.JavaScript;
+
+using BankAccount.Ports;
 
 namespace BankAccount;
 
@@ -25,15 +27,13 @@ public class AccountService
 
     public void Withdraw(int amount)
     {
+        _transactionRepository.Add(new Transfer(_calendarStub.CurrentDate, -amount));
     }
 
     public void PrintStatement()
     {
-        string header = "Date       || Amount || Balance";
-        foreach(var transaction in _transactionRepository.AllTransactions())
-        {
-            header += "\n" +transaction.Print();
-        }
-        _bankStatementPrinter.Print(header);
+        PrintableStatement printableStatement = PrintableStatement.Create(_transactionRepository.AllTransactions());
+
+        _bankStatementPrinter.Print(printableStatement.MakeStatement());
     }
 }

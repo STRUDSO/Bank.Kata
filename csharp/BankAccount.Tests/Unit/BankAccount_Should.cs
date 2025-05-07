@@ -40,6 +40,22 @@ public class BankAccount_Should
 
     }
 
+    [Fact]
+    public void WithDraw_Amount()
+    {
+        Deposit(500, new DateTime(2012, 1, 13));
+        WithDraw(200, new DateTime(2012, 1, 14));
+
+        PrintBankStatement();
+
+        ExpectedPrintedStatement("""
+                                 Date       || Amount || Balance
+                                 14/01/2012 || -200    || 300
+                                 13/01/2012 || 500    || 500
+                                 """);
+
+    }
+
 
     private void Deposit(int of, DateTime on)
     {

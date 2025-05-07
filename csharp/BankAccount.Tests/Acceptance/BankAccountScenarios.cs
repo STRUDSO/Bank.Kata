@@ -2,7 +2,7 @@
 
 using Xunit.Abstractions;
 
-namespace BankAccount.Test.Acceptance;
+namespace BankAccount.Test;
 
 public class BankAccountScenarios
 {

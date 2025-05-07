@@ -26,6 +26,19 @@ public class BankAccount_Should
         ExpectedPrintedStatement("Date       || Amount || Balance");
     }
 
+    [Fact]
+    public void Deposit_Amount()
+    {
+        Deposit(500, new DateTime(2012, 1, 13));
+
+        PrintBankStatement();
+
+        ExpectedPrintedStatement("""
+                                 Date       || Amount || Balance
+                                 13/01/2012 || 500    || 500
+                                 """);
+
+    }
 
 
     private void Deposit(int of, DateTime on)

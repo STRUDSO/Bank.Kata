@@ -1,5 +1,5 @@
 sequenceDiagram
-    participant Client
+    Actor Client
     participant AccountService
     participant ICalendar
     participant ITransactionRepository
@@ -7,39 +7,20 @@ sequenceDiagram
     participant PrintableLine
     participant IBankStatementPrinter
     
-    Note over Client,IBankStatementPrinter: Deposit Flow
-    Client->>+AccountService: deposit(amount)
-    AccountService->>+ICalendar: CurrentDate
-    ICalendar-->>-AccountService: date
-    AccountService->>+ITransactionRepository: Add(new Transfer(date, amount))
-    ITransactionRepository-->>-AccountService: void
-    AccountService-->>-Client: void
     
-    Note over Client,IBankStatementPrinter: Withdraw Flow
-    Client->>+AccountService: withdraw(amount)
+    Client->>+AccountService: withdraw/deposit(amount)
     AccountService->>+ICalendar: CurrentDate
-    ICalendar-->>-AccountService: date
     AccountService->>+ITransactionRepository: Add(new Transfer(date, -amount))
-    ITransactionRepository-->>-AccountService: void
-    AccountService-->>-Client: void
     
-    Note over Client,IBankStatementPrinter: Print Statement Flow
     Client->>+AccountService: printStatement()
     AccountService->>+ITransactionRepository: AllTransactions()
-    ITransactionRepository-->>-AccountService: IEnumerable<Transfer>
     
     AccountService->>+PrintableStatement: Create(transactions)
     loop For each transaction
         PrintableStatement->>PrintableStatement: Add(transaction)
         PrintableStatement->>PrintableLine: new PrintableLine(transaction, balance)
     end
-    PrintableStatement-->>-AccountService: printableStatement
     
     AccountService->>+PrintableStatement: MakeStatement()
-    PrintableStatement->>PrintableStatement: Generate formatted statement
-    PrintableStatement-->>-AccountService: formattedText
     
-    AccountService->>+IBankStatementPrinter: Print(formattedText)
-    IBankStatementPrinter-->>-AccountService: void
-    
-    AccountService-->>-Client: void
+    AccountService->>+IBankStatementPrinter: Print(statment)

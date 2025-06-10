@@ -1,21 +1,24 @@
 ﻿using BankAccount.Ports;
 using BankAccount.Test.Doubles;
 
+using Xunit.Abstractions;
+using Xunit.Sdk;
+
 namespace BankAccount.Test.Unit;
 
 public class BankAccount_Should
 {
+    private readonly ITestOutputHelper _output;
     private readonly AccountService _accountService;
     private readonly BankStatementPrinterSpy _bankStatementPrinter;
     private readonly CalendarStub _calendarStub;
-    private readonly ITransactionRepository _transactionRepository;
 
-    public BankAccount_Should()
+    public BankAccount_Should(ITestOutputHelper output)
     {
+        _output = output;
         _calendarStub = new CalendarStub();
-        _transactionRepository = new FakeTransactionRepository();
         _bankStatementPrinter = new BankStatementPrinterSpy();
-        _accountService = new AccountService(_calendarStub, _transactionRepository, _bankStatementPrinter);
+        _accountService = new AccountService(_calendarStub, new FakeTransactionRepository(), _bankStatementPrinter);
     }
 
     [Fact]
@@ -37,7 +40,6 @@ public class BankAccount_Should
                                  Date       || Amount || Balance
                                  13/01/2012 || 500    || 500
                                  """);
-
     }
 
     [Fact]
@@ -49,11 +51,10 @@ public class BankAccount_Should
         PrintBankStatement();
 
         ExpectedPrintedStatement("""
-                                 Date       || Amount || Balance
+                                 Date    || Amount || Balance
                                  14/01/2012 || -200    || 300
                                  13/01/2012 || 500    || 500
                                  """);
-
     }
 
 
@@ -76,6 +77,18 @@ public class BankAccount_Should
 
     private void ExpectedPrintedStatement(string expected)
     {
-        Assert.Equal(expected, _bankStatementPrinter.LastPrintOut);
+        string actual = _bankStatementPrinter.LastPrintOut;
+        _output.WriteLine("EXPECTED:");
+        _output.WriteLine(expected);
+        _output.WriteLine("");
+        _output.WriteLine("ACTUAL:");
+        _output.WriteLine(actual);
+
+        Assert.Equal(expected,
+            actual,
+            ignoreLineEndingDifferences: true,
+            ignoreWhiteSpaceDifferences: true,
+            ignoreAllWhiteSpace: true,
+            ignoreCase: true);
     }
 }

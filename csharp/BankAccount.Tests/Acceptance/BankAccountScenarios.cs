@@ -6,24 +6,14 @@ namespace BankAccount.Test;
 
 public class BankAccountScenarios
 {
+    private readonly ITestOutputHelper _output;
     private readonly AccountService _accountService;
     private readonly CalendarStub _calendarStub;
     private readonly BankStatementPrinterSpy _bankStatementPrinterSpy;
-    private readonly ITestOutputHelper _output;
 
-    /*
-     * Design:
-     * AccountService -> Calendar Port (Stub)
-     * AccountService -> Transaction Repository (Fake)
-     * AccountService -> IBankStatementPrinter (Spy)
-     *
-     * Transfer
-     * PrintableStatement
-     * PrintableStatementLine
-     */
-    public BankAccountScenarios(ITestOutputHelper output)
+    public BankAccountScenarios(ITestOutputHelper _output)
     {
-        _output = output;
+        this._output = _output;
         _calendarStub = new CalendarStub();
         _bankStatementPrinterSpy = new BankStatementPrinterSpy();
         _accountService = new AccountService(_calendarStub, new FakeTransactionRepository(), _bankStatementPrinterSpy);
@@ -39,9 +29,9 @@ public class BankAccountScenarios
         PrintBankStatement();
         ExpectedPrintedStatement("""
                                  Date       || Amount || Balance
-                                 14/01/2012 || -500   || 2500
-                                 13/01/2012 || 2000   || 3000
-                                 10/01/2012 || 1000   || 1000
+                                 14/01/2012 || -500    || 2500
+                                 13/01/2012 || 2000    || 3000
+                                 10/01/2012 || 1000    || 1000
                                  """
         );
     }

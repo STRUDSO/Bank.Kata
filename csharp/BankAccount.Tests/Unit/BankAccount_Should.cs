@@ -11,15 +11,13 @@ public class BankAccount_Should
     private readonly AccountService _accountService;
     private readonly BankStatementPrinterSpy _bankStatementPrinter;
     private readonly CalendarStub _calendarStub;
-    private readonly ITransactionRepository _transactionRepository;
 
     public BankAccount_Should(ITestOutputHelper output)
     {
         _output = output;
         _calendarStub = new CalendarStub();
-        _transactionRepository = new FakeTransactionRepository();
         _bankStatementPrinter = new BankStatementPrinterSpy();
-        _accountService = new AccountService(_calendarStub, _transactionRepository, _bankStatementPrinter);
+        _accountService = new AccountService(_calendarStub, new FakeTransactionRepository(), _bankStatementPrinter);
     }
 
     [Fact]

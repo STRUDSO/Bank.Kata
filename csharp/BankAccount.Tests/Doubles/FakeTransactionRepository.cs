@@ -4,14 +4,14 @@ namespace BankAccount.Test.Doubles;
 
 public class FakeTransactionRepository : ITransactionRepository
 {
-    private List<object> _stored = [];
+    private List<Transfer> _stored = [];
 
-    public IEnumerable<object> AllTransactions()
+    public IEnumerable<Transfer> AllTransactions()
     {
         return _stored;
     }
 
-    public void Add(object transfer)
+    public void Add(Transfer transfer)
     {
         _stored.Add(transfer);
     }

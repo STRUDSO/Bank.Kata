@@ -1,16 +1,15 @@
-﻿using BankAccount.Ports;
-using BankAccount.Test.Doubles;
+﻿using BankAccount.Test.Doubles;
 
 using Xunit.Abstractions;
 
-namespace BankAccount.Test;
+namespace BankAccount.Test.Acceptance;
 
-public class BankAccount_Should
+public class BankAccountScenarios
 {
     private readonly AccountService _accountService;
     private readonly CalendarStub _calendarStub;
     private readonly BankStatementPrinterSpy _bankStatementPrinterSpy;
-    private ITestOutputHelper _output;
+    private readonly ITestOutputHelper _output;
 
     /*
      * Design:
@@ -22,7 +21,7 @@ public class BankAccount_Should
      * PrintableStatement
      * PrintableStatementLine
      */
-    public BankAccount_Should(ITestOutputHelper output)
+    public BankAccountScenarios(ITestOutputHelper output)
     {
         _output = output;
         _calendarStub = new CalendarStub();
